@@ -1,0 +1,41 @@
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+
+<body>
+
+<div id="app">
+    {{ message }}
+</div>
+
+<div id="app-2">
+    <p v-bind:title="message">Hover over this text to view the load time</p>
+</div>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+    })
+
+</script>
+
+</body>
+
+</html>
+
+
