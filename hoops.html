@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoops</title>
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+
+    <style>
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div id="app-3">
+
+    <button v-on:click="seen = !seen">Toggle</button>
+
+    <transition name="fade">
+
+        <p v-if="seen">Now you see me</p>
+
+    </transition>
+
+
+    <ul>
+        <li v-for="grocery in groceries">
+            {{ grocery.name }}
+        </li>
+    </ul>
+
+
+</div>
+
+<script>
+
+    var app = new Vue({
+        el: "#app-3",
+        data: {
+            seen: true,
+            groceries: [
+                {name: "Milk"},
+                {name: "Cheese"},
+                {name: "Bread"},
+                {name: "Butter"},
+            ]
+        }
+    });
+
+</script>
+
+
+</body>
+</html>
