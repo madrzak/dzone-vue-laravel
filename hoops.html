@@ -5,6 +5,7 @@
     <title>Hoops</title>
 
     <script src="node_modules/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"/>
 
 </head>
 <body>
@@ -16,8 +17,9 @@
     <button v-on:click="handleSubmit">Add to the list</button>
 
     <ul>
-        <li v-for="grocery in groceries">
+        <li v-for="(grocery, index) in groceries">
             {{ grocery.name }}
+            <i class="far fa-trash-alt" v-on:click="handleRemove(index)"></i>
         </li>
     </ul>
 
@@ -43,6 +45,10 @@
                 this.groceries.push({name: this.$refs.item.value})
 
                 this.$refs.item.value = ''
+            },
+            handleRemove: function (index) {
+                console.log(index)
+                this.groceries.splice(index, 1)
             }
         }
     });

@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2"
   }
 }
