@@ -14,6 +14,15 @@
         <div class="col">
             <div id="app" class="col-md-6 offset-md-3 my-5">
 
+                <div v-if="errors.length" class="alert alert-danger">
+                    <p>
+                        <b>Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                    </p>
+                </div>
+
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input id="name" name="name" class="form-control" v-model="name"/>
@@ -22,7 +31,6 @@
                 <div class="form-group form-check">
                     <input type="checkbox" id="checkbox" class="form-check-input" v-model="confirmed"/>
                     <label for="checkbox" class="form-check-label">RSVP</label>
-
                 </div>
 
                 <div class="form-group">
@@ -103,18 +111,51 @@
             confirmed: false,
             tableNumber: '',
             allergies: [],
-            guests: []
+            guests: [],
+            errors: []
         },
         methods: {
-            addGuest: function () {
-                console.log(`Adding guest ${this.name} ${this.confirmed} ${this.tableNumber} ${this.allergies}`)
-                let guest = {name: this.name, confirmed: this.confirmed, tableNumber: this.tableNumber, allergies: this.allergies}
-                this.guests.push(guest)
+            isValid: function (name, tableNumber) {
+                this.errors = []
+                if (name === '') {
+                    this.errors.push("Name is required")
+                } else if (name.length > 20 || name.length <= 2) {
+                    this.errors.push("Name must be at least 3 chars and at most 20 chars")
+                }
 
-                this.name = ''
-                this.confirmed = false
-                this.tableNumber = ''
-                this.allergies = []
+                if (tableNumber === '') {
+                    this.errors.push("Table Number is required")
+                }
+
+                if (this.errors.length > 0) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+            addGuest: function () {
+
+                if (this.isValid(this.name, this.tableNumber)) {
+
+                    console.log(`Adding guest ${this.name} ${this.confirmed} ${this.tableNumber} ${this.allergies}`)
+                    let guest = {
+                        name: this.name,
+                        confirmed: this.confirmed,
+                        tableNumber: this.tableNumber,
+                        allergies: this.allergies
+                    }
+                    this.guests.push(guest)
+
+                    this.name = ''
+                    this.confirmed = false
+                    this.tableNumber = ''
+                    this.allergies = []
+
+                } else {
+                    console.log(this.errors)
+
+                    console.log("Input failed validation")
+                }
             }
         }
     })
