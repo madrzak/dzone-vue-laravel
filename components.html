@@ -1,0 +1,67 @@
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+
+</head>
+
+
+<body>
+<div class="container">
+    <div id="components-app">
+        <click-counter></click-counter>
+        <click-counter></click-counter>
+        <click-counter></click-counter>
+    </div>
+
+    <div id="comments-app">
+        <user-comment
+                v-for="comment in comments"
+                v-bind:comment="comment"
+                v-bind:key="comment.id">
+        </user-comment>
+    </div>
+</div>
+
+<script>
+
+    // click-counter component
+    Vue.component('click-counter', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">Click count = {{ count }}</button>'
+    })
+
+
+    var app = new Vue({
+        el: '#components-app',
+        data: {}
+    })
+
+    Vue.component('user-comment', {
+        props: ['comment'],
+        template: '<div><p class="font-weight-bold">{{ comment.name }} said:</p><p>{{ comment.content }}</p></div>'
+    })
+
+    var app = new Vue({
+        el: '#comments-app',
+        data: {
+            comments: [
+                {id: 1, name: "Jerry", content: "I love Vue so much"},
+                {id: 2, name: "Eric", content: "Vue.js solved all my relationship problems!"},
+                {id: 3, name: "Sandra", content: "I'm currently on the beach coding Vue as we speak!"},
+            ]
+        }
+    })
+
+</script>
+
+</body>
+
+</html>
+
+
